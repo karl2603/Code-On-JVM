@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 /* --- ICONS --- */
@@ -51,15 +51,51 @@ const SPONSORS = [
   { name: "Redis", logo: "RED" },
 ];
 
+// --- HOOKS ---
+const useCountUp = (end, duration = 2000) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if(entry.isIntersecting) setInView(true);
+    }, { threshold: 0.5 });
+    if(ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if(!inView) return;
+    let start = 0;
+    const increment = end / (duration / 16);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else setCount(Math.ceil(start));
+    }, 16);
+    return () => clearInterval(timer);
+  }, [inView, end, duration]);
+
+  return [count, ref];
+};
+
 function App() {
   const [active, setActive] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Counters
+  const [engineers, refEng] = useCountUp(500);
+  const [sessions, refSess] = useCountUp(50);
+  const [community, refComm] = useCountUp(100);
+
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
-      const sections = ['home', 'about', 'work', 'events', 'join', 'team', 'sponsors', 'contact'];
+      const sections = ['home', 'about', 'work', 'events', 'join', 'sponsors', 'team', 'contact'];
       for (const id of sections) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= (el.offsetTop - 200)) setActive(id);
@@ -90,11 +126,11 @@ function App() {
           <div className="logo-container" onClick={() => scrollTo('home')}>
             <img src={LOGO_URL} alt="Code On JVM" className="nav-logo-img" />
             <div className="logo-text">
-              CODE<span className="highlight">ON</span><span className="highlight">JVM</span>
+              CODEON<span className="highlight-orange">JVM</span>
             </div>
           </div>
           <div className={`nav-menu ${menuOpen ? 'open' : ''}`}>
-            {['Home', 'About', 'Work', 'Events', 'Join', 'Team', 'Contact'].map(item => (
+            {['Home', 'About', 'Work', 'Events', 'Join', 'Sponsors', 'Team', 'Contact'].map(item => (
               <button key={item} className={`nav-link ${active === item.toLowerCase() ? 'active' : ''}`} onClick={() => scrollTo(item.toLowerCase())}>
                 {item}
               </button>
@@ -111,9 +147,9 @@ function App() {
         <div className="hero-glow"></div>
         <div className="hero-container">
           <div className="hero-content reveal">
-            <div className="hero-tag"><span className="dot"></span> CHENNAI'S JAVA ECOSYSTEM</div>
-            <h1 className="hero-heading">ARCHITECTING <br/><span className="text-gradient">THE FUTURE.</span></h1>
-            <p className="hero-sub">A premium community for backend engineers, architects, and JVM enthusiasts.</p>
+            <div className="hero-tag"><span className="dot"></span> CHENNAI'S BIGGEST JAVA COMMUNITY</div>
+            <h1 className="hero-heading">CODE ON <br/><span className="text-gradient">JVM CHENNAI</span></h1>
+            <p className="hero-sub">A premium community where Java, Kotlin & JVM enthusiasts connect, learn & build.</p>
             <div className="hero-actions">
               <button className="btn primary" onClick={() => scrollTo('join')}>Join Community <Icons.ChevronRight /></button>
               <button className="btn outline" onClick={() => scrollTo('events')}>View Events</button>
@@ -136,7 +172,7 @@ function App() {
         </div>
       </section>
 
-      {/* ABOUT */}
+      {/* ABOUT (IMPROVED COUNTERS) */}
       <section id="about" className="section dark-section">
         <div className="container">
           <div className="about-grid">
@@ -144,12 +180,24 @@ function App() {
               <h2 className="section-title">Beyond Syntax.</h2>
               <p className="lead-text">We are not just a meetup group. We are a collective of engineering excellence.</p>
               <p className="desc-text">Located in the heart of Chennai, we bridge the gap between theory and high-scale enterprise engineering.</p>
+              
+              {/* Counters */}
               <div className="stats-row">
-                <div className="stat"><h3>500+</h3><label>Engineers</label></div>
-                <div className="stat"><h3>50+</h3><label>Sessions</label></div>
-                <div className="stat hl"><h3>100%</h3><label>Community</label></div>
+                <div className="stat" ref={refEng}>
+                  <h3>{engineers}+</h3>
+                  <label>Engineers</label>
+                </div>
+                <div className="stat" ref={refSess}>
+                  <h3>{sessions}+</h3>
+                  <label>Sessions</label>
+                </div>
+                <div className="stat hl" ref={refComm}>
+                  <h3>{community}%</h3>
+                  <label>Community</label>
+                </div>
               </div>
             </div>
+            
             <div className="about-visual reveal">
                <div className="visual-card">
                  <div className="card-glow"></div>
@@ -239,31 +287,7 @@ function App() {
         </div>
       </section>
 
-      {/* TEAM */}
-      <section id="team" className="section">
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="eyebrow">THE CORE</span>
-            <h2>Our Team</h2>
-          </div>
-          <div className="team-grid">
-            {TEAM.map((m, i) => (
-              <div key={i} className="team-card reveal">
-                <div className="tc-img-wrap">
-                  <img src={m.img} alt={m.name} className="tc-img" />
-                  <div className="tc-overlay"></div>
-                  <div className="tc-info">
-                    <h4>{m.name}</h4>
-                    <span>{m.role}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SPONSORS */}
+      {/* SPONSORS (MOVED ABOVE TEAM) */}
       <section id="sponsors" className="section dark-section">
         <div className="container">
           <div className="section-header reveal">
@@ -285,6 +309,30 @@ function App() {
 
           <div className="center-btn reveal" style={{marginTop: '60px'}}>
             <button className="btn outline">Become a Sponsor</button>
+          </div>
+        </div>
+      </section>
+
+      {/* TEAM (MOVED BELOW SPONSORS) */}
+      <section id="team" className="section">
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="eyebrow">THE CORE</span>
+            <h2>Our Team</h2>
+          </div>
+          <div className="team-grid">
+            {TEAM.map((m, i) => (
+              <div key={i} className="team-card reveal">
+                <div className="tc-img-wrap">
+                  <img src={m.img} alt={m.name} className="tc-img" />
+                  <div className="tc-overlay"></div>
+                  <div className="tc-info">
+                    <h4>{m.name}</h4>
+                    <span>{m.role}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -317,49 +365,63 @@ function App() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="footer-stunning">
+      {/* FOOTER (ARCHITECTURAL & RESPONSIVE) */}
+      <footer className="footer-architect">
         <div className="container">
-          <div className="footer-main">
-            <div className="footer-brand-area">
-              <div className="footer-logo-row">
-                <img src={LOGO_URL} alt="Footer Logo" className="footer-logo-img" />
-                <h1 className="footer-giant-text">CODE ON <span className="highlight">JVM</span></h1>
-              </div>
-            </div>
-            
-            <div className="footer-grid">
-              <div className="fg-col">
-                <label>EXPLORE</label>
-                <a href="#about">About Us</a>
+          
+          {/* Main Footer Grid */}
+          <div className="footer-content">
+            <div className="f-grid">
+              
+              {/* Navigation Column */}
+              <div className="f-col">
+                <h4 className="f-head">EXPLORE</h4>
+                <a href="#about">About</a>
                 <a href="#events">Upcoming Events</a>
                 <a href="#work">What We Do</a>
                 <a href="#team">Our Team</a>
               </div>
-              <div className="fg-col">
-                <label>CONNECT</label>
+
+              {/* Social Column */}
+              <div className="f-col">
+                <h4 className="f-head">CONNECT</h4>
                 <a href="#">LinkedIn</a>
                 <a href="#">Twitter / X</a>
                 <a href="#">Instagram</a>
                 <a href="#">YouTube</a>
               </div>
-              <div className="fg-col">
-                <label>LEGAL</label>
+
+              {/* Legal Column */}
+              <div className="f-col">
+                <h4 className="f-head">LEGAL</h4>
                 <a href="#">Code of Conduct</a>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Use</a>
               </div>
-              <div className="fg-col credit-col">
-                  <p className="footer-credit">Designed & Built by <span className="credit-name">Karl</span>.</p>
-                  <p className="credit-sub">Est. 2026</p>
+
+              {/* Credit Column */}
+              <div className="f-col credit-col">
+                <h4 className="f-head">CREDIT</h4>
+                <p>Designed & Built by <a className="text-white" href='https://www.linkedin.com/in/karlarvindraj/'>Karl</a>.</p>
+                <p className="sub-text">Est. 2026</p>
               </div>
+
             </div>
           </div>
-          
-          <div className="footer-bottom-bar">
-             <span>&copy; 2026 CODE ON JVM. EST. CHENNAI.</span>
-             <button className="back-to-top" onClick={() => window.scrollTo(0,0)}>BACK TO TOP ↑</button>
+
+          <div className="footer-divider"></div>
+
+          {/* Bottom Monumental Brand */}
+          <div className="footer-bottom-flex">
+            <h1 className="footer-monument">
+              CODE ON <span className="highlight-orange">JVM</span>
+            </h1>
+            <div className="footer-meta">
+              <span>&copy; 2026 CODE ON JVM. CHENNAI.</span>
+              <button className="back-top" onClick={() => window.scrollTo(0,0)}>BACK TO TOP ↑</button>
+            </div>
           </div>
+
         </div>
       </footer>
 
