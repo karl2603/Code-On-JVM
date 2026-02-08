@@ -43,7 +43,7 @@ const TEAM = [
 
 /* UPDATED SPONSORS DATA: 'invert: true' added to white logos */
 const SPONSORS = [
-  { name: "St. Joseph's College of Engineering", logo: "/Assets/st-josephs.png" },
+  { name: "St. Joseph's College of Engineering", logo: "/Assets/sjosephs.png" },
   { name: "CONTENTSTACK", logo: "/Assets/contentstack.png" },
   { name: "rezoomex", logo: "/Assets/rezoomex.png" },
   { name: "M2P", logo: "/Assets/m2p.png" },
@@ -309,7 +309,7 @@ function App() {
           </div>
 
           <div className="center-btn reveal" style={{ marginTop: '60px' }}>
-            <button className="btn outline">Become a Sponsor</button>
+            <button className="btn outline" ><a href="#contact">Become a Sponsor</a></button>
           </div>
         </div>
       </section>

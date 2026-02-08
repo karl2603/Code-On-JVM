@@ -289,11 +289,11 @@ pre { font-family: var(--font-code); font-size: 0.9rem; line-height: 1.6; }
 .join-sub { font-size: 1.25rem; color: #aaa; margin-bottom: 40px; }
 .big-btn { font-size: 1.2rem; padding: 18px 40px; }
 
-/* --- SPONSORS (Uniform Tile Grid - FULL COLOR) --- */
+/* --- SPONSORS (Uniform Tile Grid - EVENLY STRUCTURED) --- */
 .sponsor-grid {
   display: grid;
-  /* Adaptive Layout */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  /* FORCE 4 COLUMNS: This ensures a 4x2 perfect grid for 8 items */
+  grid-template-columns: repeat(4, 1fr); 
   gap: 24px;
   margin-top: 50px;
 }
@@ -325,7 +325,7 @@ pre { font-family: var(--font-code); font-size: 0.9rem; line-height: 1.6; }
   max-height: 100%;
   object-fit: contain; 
   transition: 0.3s;
-  /* REMOVED GRAYSCALE FILTER: Logos show in full color by default */
+  /* FULL COLOR DEFAULT */
   filter: none; 
 }
 
@@ -449,7 +449,12 @@ pre { font-family: var(--font-code); font-size: 0.9rem; line-height: 1.6; }
   box-shadow: 0 0 20px var(--orange-dim);
 }
 
-/* --- MOBILE --- */
+/* --- MOBILE & RESPONSIVE --- */
+@media (max-width: 1100px) {
+  /* On tablets, switch to 3 columns? Or maybe 2 to keep it even */
+  .sponsor-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 900px) {
   .hero-container { flex-direction: column; text-align: center; }
   .hero-heading { font-size: 3.5rem; }
@@ -457,7 +462,7 @@ pre { font-family: var(--font-code); font-size: 0.9rem; line-height: 1.6; }
   .hero-code { display: none; }
   .about-grid, .contact-wrapper { grid-template-columns: 1fr; flex-direction: column; gap: 40px; }
   
-  /* Update sponsor mobile view */
+  /* Ensure 2 columns on mobile for the sponsors */
   .sponsor-grid { grid-template-columns: repeat(2, 1fr); }
   
   .nav-menu { position: fixed; top: 80px; left: 0; width: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); flex-direction: column; padding: 20px; gap: 0; border-bottom: 1px solid var(--border); height: 0; overflow: hidden; transition: 0.4s var(--ease-out); }
