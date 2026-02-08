@@ -6,6 +6,7 @@ const Icons = {
   Menu: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>,
   Close: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
   ChevronRight: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>,
+  ArrowUp: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>,
   ArrowUpRight: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>,
   MapPin: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
   Calendar: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>,
@@ -18,15 +19,18 @@ const Icons = {
 /* --- DATA --- */
 const LOGO_URL = "/Assets/cropped_circle_image.png";
 
+/* NOTE: Ensure you have images named 'event-1.jpg', 'event-2.jpg' etc. 
+  inside your 'public/Assets/' folder. 
+*/
 const PAST_EVENTS = [
-  { id: 1, title: "Microservices Scalability", date: "Sep 22, 2025", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600", tag: "Architecture" },
-  { id: 2, title: "Reactive Systems & Spring", date: "Aug 15, 2025", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600", tag: "Backend" },
-  { id: 3, title: "Kubernetes for Java Devs", date: "Jul 10, 2025", img: "https://images.unsplash.com/photo-1667372393119-c81c0cda0c18?auto=format&fit=crop&q=80&w=600", tag: "DevOps" },
-  { id: 4, title: "GraalVM & Native Images", date: "Jun 05, 2025", img: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=600", tag: "Performance" },
-  { id: 5, title: "Java 25: The New Era", date: "May 20, 2025", img: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&q=80&w=600", tag: "Core" },
-  { id: 6, title: "System Design Interview", date: "Apr 12, 2025", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=600", tag: "Career" },
-  { id: 7, title: "Concurrency Patterns", date: "Mar 28, 2025", img: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80&w=600", tag: "Deep Dive" },
-  { id: 8, title: "Cloud Native Java", date: "Feb 14, 2025", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600", tag: "Cloud" },
+  { id: 1, title: "December Meetup", date: "Dec 2024", img: "/Assets/event-1.jpg" },
+  { id: 2, title: "Hackerz Thiruvizha", date: "Feb, 2025", img: "/Assets/event-2.jpg" },
+  { id: 3, title: "May Meetup", date: "May, 2025", img: "/Assets/event-3.jpg" },
+  { id: 4, title: "June Meetup", date: "June, 2025", img: "/Assets/event-4.jpg" },
+  { id: 5, title: "July Meetup", date: "July, 2025", img: "/Assets/event-5.jpg" },
+  { id: 6, title: "August Meetup", date: "Aug, 2025", img: "/Assets/event-6.jpg" },
+  { id: 7, title: "September Meetup", date: "Sept, 2025", img: "/Assets/event-7.jpg" },
+  { id: 8, title: "January Meetup", date: "Jan, 2025", img: "/Assets/event-8.jpg" },
 ];
 
 const TEAM = [
@@ -88,8 +92,8 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
 
   // Counters
-  const [engineers, refEng] = useCountUp(500);
-  const [sessions, refSess] = useCountUp(50);
+  const [engineers, refEng] = useCountUp(2000);
+  const [sessions, refSess] = useCountUp(20);
   const [community, refComm] = useCountUp(100);
 
   useEffect(() => {
@@ -148,7 +152,7 @@ function App() {
         <div className="hero-container">
           <div className="hero-content reveal">
             <div className="hero-tag"><span className="dot"></span> CHENNAI'S BIGGEST JAVA COMMUNITY</div>
-            <h1 className="hero-heading">CODE ON <br/><span className="text-gradient">JVM CHENNAI</span></h1>
+            <h1 className="hero-heading">CODE ON<br/><span className="text-gradient">JVM CHENNAI</span></h1>
             <p className="hero-sub">A premium community where Java, Kotlin & JVM enthusiasts connect, learn & build.</p>
             <div className="hero-actions">
               <button className="btn primary" onClick={() => scrollTo('join')}>Join Community <Icons.ChevronRight /></button>
@@ -160,9 +164,11 @@ function App() {
               <div className="code-header"><span className="c-dot r"></span><span className="c-dot y"></span><span className="c-dot g"></span></div>
               <pre>
                 <code>
-                  <span className="k">class</span> <span className="c">Future</span> <span className="k">extends</span> <span className="c">Jvm</span> {'{'}<br/>
-                  &nbsp;&nbsp;<span className="k">void</span> <span className="f">ignite</span>() {'{'}<br/>
+                  <span className="k">class</span> <span className="c">Future</span> <span className="k">extends</span> <span className="c">JVM</span> {'{'}<br/><br/>
+                  &nbsp;&nbsp;<span className="k">void</span> <span className="f">join</span>() {'{'}<br/>
                   &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Community</span>.build(<span className="s">"Chennai"</span>);<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Java</span>.learn();<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Engineers</span>.connect();<br/>
                   &nbsp;&nbsp;{'}'}<br/>
                   {'}'}
                 </code>
@@ -172,7 +178,7 @@ function App() {
         </div>
       </section>
 
-      {/* ABOUT (IMPROVED COUNTERS) */}
+      {/* ABOUT */}
       <section id="about" className="section dark-section">
         <div className="container">
           <div className="about-grid">
@@ -181,11 +187,10 @@ function App() {
               <p className="lead-text">We are not just a meetup group. We are a collective of engineering excellence.</p>
               <p className="desc-text">Located in the heart of Chennai, we bridge the gap between theory and high-scale enterprise engineering.</p>
               
-              {/* Counters */}
               <div className="stats-row">
                 <div className="stat" ref={refEng}>
                   <h3>{engineers}+</h3>
-                  <label>Engineers</label>
+                  <label>Members</label>
                 </div>
                 <div className="stat" ref={refSess}>
                   <h3>{sessions}+</h3>
@@ -199,10 +204,11 @@ function App() {
             </div>
             
             <div className="about-visual reveal">
-               <div className="visual-card">
-                 <div className="card-glow"></div>
-                 <h3>Our Mission</h3>
-                 <p>To foster a culture of deep technical discourse, mentorship, and innovation on the JVM stack.</p>
+               <div className="jvm-stack-container">
+                 <div className="stack-layer layer-1"><span>Java</span></div>
+                 <div className="stack-layer layer-2"><span>JVM</span></div>
+                 <div className="stack-layer layer-3"><span>Kotlin</span></div>
+                 <div className="orbit-ring"></div>
                </div>
             </div>
           </div>
@@ -235,7 +241,7 @@ function App() {
         </div>
       </section>
 
-      {/* EVENTS */}
+      {/* EVENTS (Updated with local images and no tags) */}
       <section id="events" className="section dark-section">
         <div className="container">
           <div className="section-header reveal">
@@ -262,8 +268,9 @@ function App() {
             {PAST_EVENTS.map(ev => (
               <div key={ev.id} className="event-card reveal">
                 <div className="ec-image">
+                  {/* Updated to use local images, tag removed */}
                   <img src={ev.img} alt={ev.title} />
-                  <div className="ec-overlay"><span className="tag">{ev.tag}</span></div>
+                  {/* Overlay removed as tag is requested to be removed */}
                 </div>
                 <div className="ec-details">
                   <span className="ec-date">{ev.date}</span>
@@ -282,12 +289,12 @@ function App() {
           <h2 className="join-heading">JOIN THE <span className="outline-text">ELITE</span></h2>
           <p className="join-sub">Access our private network, job referrals, and architecture debates.</p>
           <div className="join-btns">
-            <button className="btn primary big-btn">Join WhatsApp Community <Icons.ArrowUpRight /></button>
+           <button className="btn primary big-btn"><a href='https://chat.whatsapp.com/L2e0OhSON4XGqmZicY2PfD'>Join WhatsApp Community </a><Icons.ArrowUpRight /></button>
           </div>
         </div>
       </section>
 
-      {/* SPONSORS (MOVED ABOVE TEAM) */}
+      {/* SPONSORS */}
       <section id="sponsors" className="section dark-section">
         <div className="container">
           <div className="section-header reveal">
@@ -313,7 +320,7 @@ function App() {
         </div>
       </section>
 
-      {/* TEAM (MOVED BELOW SPONSORS) */}
+      {/* TEAM */}
       <section id="team" className="section">
         <div className="container">
           <div className="section-header reveal">
@@ -345,7 +352,7 @@ function App() {
               <h2>Let's Talk Code.</h2>
               <p>Speaking, sponsoring, or just saying hello.</p>
               <div className="contact-details">
-                <div className="cd-item"><label>Email</label>hello@codeonjvm.com</div>
+                <div className="cd-item"><label>Email</label>codeonjvmchennai@gmail.com</div>
                 <div className="cd-item"><label>Location</label>Chennai, India</div>
               </div>
             </div>
@@ -365,66 +372,54 @@ function App() {
         </div>
       </section>
 
-      {/* FOOTER (ARCHITECTURAL & RESPONSIVE) */}
+      {/* FOOTER */}
       <footer className="footer-architect">
         <div className="container">
-          
-          {/* Main Footer Grid */}
           <div className="footer-content">
+            <div className="footer-brand-header">
+               <h1 className="footer-giant-text">
+                 CODE ON <span className="highlight-orange">JVM</span>
+               </h1>
+            </div>
+
             <div className="f-grid">
-              
-              {/* Navigation Column */}
               <div className="f-col">
                 <h4 className="f-head">EXPLORE</h4>
-                <a href="#about">About</a>
+                <a href="#about">About Us</a>
                 <a href="#events">Upcoming Events</a>
                 <a href="#work">What We Do</a>
                 <a href="#team">Our Team</a>
               </div>
-
-              {/* Social Column */}
               <div className="f-col">
                 <h4 className="f-head">CONNECT</h4>
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter / X</a>
-                <a href="#">Instagram</a>
-                <a href="#">YouTube</a>
+                <a href="https://www.linkedin.com/company/codeonjvmchennai/posts/?feedView=all&viewAsMember=true">LinkedIn</a>
+                <a href="https://www.instagram.com/codeonjvmchennai/">Instagram</a>
+                <a href="https://www.youtube.com/@CodeOnJVMChennai">YouTube</a>
+                <a href="https://luma.com/user/CodeonJVM">Luma</a>
               </div>
-
-              {/* Legal Column */}
               <div className="f-col">
                 <h4 className="f-head">LEGAL</h4>
                 <a href="#">Code of Conduct</a>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Use</a>
               </div>
-
-              {/* Credit Column */}
               <div className="f-col credit-col">
                 <h4 className="f-head">CREDIT</h4>
                 <p>Designed & Built by <a className="text-white" href='https://www.linkedin.com/in/karlarvindraj/'>Karl</a>.</p>
-                <p className="sub-text">Est. 2026</p>
               </div>
-
             </div>
           </div>
-
           <div className="footer-divider"></div>
-
-          {/* Bottom Monumental Brand */}
-          <div className="footer-bottom-flex">
-            <h1 className="footer-monument">
-              CODE ON <span className="highlight-orange">JVM</span>
-            </h1>
-            <div className="footer-meta">
-              <span>&copy; 2026 CODE ON JVM. CHENNAI.</span>
-              <button className="back-top" onClick={() => window.scrollTo(0,0)}>BACK TO TOP ↑</button>
-            </div>
+          <div className="footer-bottom-bar">
+             <div className="fb-left">
+                &copy; 2026 CODE ON JVM. CHENNAI.
+             </div>
+             <button className="back-top-btn" onClick={() => window.scrollTo(0,0)}>
+               Back to Top <span className="icon-up"><Icons.ArrowUp /></span>
+             </button>
           </div>
-
         </div>
       </footer>
-
     </div>
   );
 }
