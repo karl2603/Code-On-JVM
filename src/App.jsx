@@ -5,7 +5,7 @@ import './App.css';
 const Icons = {
   Menu: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>,
   Close: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
-  ChevronRight: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>,
+  ChevronRight: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>,
   ArrowUp: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>,
   ArrowUpRight: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>,
   MapPin: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
@@ -30,7 +30,6 @@ const PAST_EVENTS = [
   { id: 8, title: "January Meetup", date: "Jan, 2025", img: "/Assets/event-8.jpg" },
 ];
 
-/* UPDATED: Points to local images in /Assets/ folder */
 const TEAM = [
   { name: "Paarthan", role: "Founder", img: "/Assets/paarthan.jpg" },
   { name: "Madesh", role: "Core Team", img: "/Assets/madesh.jpeg" },
@@ -42,16 +41,16 @@ const TEAM = [
   { name: "Mithil", role: "Volunteer", img: "/Assets/mithil.jpeg" },
 ];
 
-/* UPDATED: Points to local images in /Assets/ folder */
+/* UPDATED SPONSORS DATA: 'invert: true' added to white logos */
 const SPONSORS = [
   { name: "St. Joseph's College of Engineering", logo: "/Assets/st-josephs.png" },
   { name: "CONTENTSTACK", logo: "/Assets/contentstack.png" },
   { name: "rezoomex", logo: "/Assets/rezoomex.png" },
-  { name: "Yuniq", logo: "/Assets/yuniq.png" },
   { name: "M2P", logo: "/Assets/m2p.png" },
-  { name: "Payilagam", logo: "/Assets/payilagam.png" },
-  { name: "Entrans Tech", logo: "/Assets/entrans.png" },
-  { name: "Emma", logo: "/Assets/emma.png" },
+  { name: "Yuniq", logo: "/Assets/yuniq.jpeg"},
+  { name: "Payilagam", logo: "/Assets/payilagam.jpeg"},
+  { name: "Entrans Tech", logo: "/Assets/entranstech.jpeg"},
+  { name: "Emma", logo: "/Assets/emma.jpg"},
 ];
 
 // --- HOOKS ---
@@ -62,14 +61,14 @@ const useCountUp = (end, duration = 2000) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      if(entry.isIntersecting) setInView(true);
+      if (entry.isIntersecting) setInView(true);
     }, { threshold: 0.5 });
-    if(ref.current) observer.observe(ref.current);
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if(!inView) return;
+    if (!inView) return;
     let start = 0;
     const increment = end / (duration / 16);
     const timer = setInterval(() => {
@@ -105,7 +104,7 @@ function App() {
       }
     };
     window.addEventListener('scroll', onScroll);
-    
+
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => e.isIntersecting && e.target.classList.add('in-view'));
     }, { threshold: 0.1 });
@@ -122,7 +121,7 @@ function App() {
   return (
     <div className="app">
       <div className="noise-bg"></div>
-      
+
       {/* NAVBAR */}
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-inner">
@@ -151,7 +150,7 @@ function App() {
         <div className="hero-container">
           <div className="hero-content reveal">
             <div className="hero-tag"><span className="dot"></span> CHENNAI'S BIGGEST JAVA COMMUNITY</div>
-            <h1 className="hero-heading">CODE ON<br/><span className="text-gradient">JVM CHENNAI</span></h1>
+            <h1 className="hero-heading">CODE ON<br /><span className="text-gradient">JVM CHENNAI</span></h1>
             <p className="hero-sub">A premium community where Java, Kotlin & JVM enthusiasts connect, learn & build.</p>
             <div className="hero-actions">
               <button className="btn primary" onClick={() => scrollTo('join')}>Join Community <Icons.ChevronRight /></button>
@@ -163,12 +162,12 @@ function App() {
               <div className="code-header"><span className="c-dot r"></span><span className="c-dot y"></span><span className="c-dot g"></span></div>
               <pre>
                 <code>
-                  <span className="k">class</span> <span className="c">Future</span> <span className="k">extends</span> <span className="c">JVM</span> {'{'}<br/><br/>
-                  &nbsp;&nbsp;<span className="k">void</span> <span className="f">join</span>() {'{'}<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Community</span>.build(<span className="s">"Chennai"</span>);<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Java</span>.learn();<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Engineers</span>.connect();<br/>
-                  &nbsp;&nbsp;{'}'}<br/>
+                  <span className="k">class</span> <span className="c">Future</span> <span className="k">extends</span> <span className="c">JVM</span> {'{'}<br /><br />
+                  &nbsp;&nbsp;<span className="k">void</span> <span className="f">join</span>() {'{'}<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Community</span>.build(<span className="s">"Chennai"</span>);<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Java</span>.learn();<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="c">Engineers</span>.connect();<br />
+                  &nbsp;&nbsp;{'}'}<br />
                   {'}'}
                 </code>
               </pre>
@@ -185,7 +184,7 @@ function App() {
               <h2 className="section-title">Beyond Syntax.</h2>
               <p className="lead-text">We are not just a meetup group. We are a collective of engineering excellence.</p>
               <p className="desc-text">Located in the heart of Chennai, we bridge the gap between theory and high-scale enterprise engineering.</p>
-              
+
               <div className="stats-row">
                 <div className="stat" ref={refEng}>
                   <h3>{engineers}+</h3>
@@ -201,14 +200,14 @@ function App() {
                 </div>
               </div>
             </div>
-            
+
             <div className="about-visual reveal">
-               <div className="jvm-stack-container">
-                 <div className="stack-layer layer-1"><span>Java</span></div>
-                 <div className="stack-layer layer-2"><span>JVM</span></div>
-                 <div className="stack-layer layer-3"><span>Kotlin</span></div>
-                 <div className="orbit-ring"></div>
-               </div>
+              <div className="jvm-stack-container">
+                <div className="stack-layer layer-1"><span>Java</span></div>
+                <div className="stack-layer layer-2"><span>JVM</span></div>
+                <div className="stack-layer layer-3"><span>Kotlin</span></div>
+                <div className="orbit-ring"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -247,7 +246,7 @@ function App() {
             <span className="eyebrow">CALENDAR</span>
             <h2>Events</h2>
           </div>
-          
+
           <div className="featured-event reveal">
             <div className="fe-bg"></div>
             <div className="fe-content">
@@ -286,41 +285,30 @@ function App() {
           <h2 className="join-heading">JOIN THE <span className="outline-text">ELITE</span></h2>
           <p className="join-sub">Access our private network, job referrals, and architecture debates.</p>
           <div className="join-btns">
-            {/* CLEAN BUTTON FIX: Used 'a' tag directly for better accessibility */}
-            <a 
-              href='https://chat.whatsapp.com/L2e0OhSON4XGqmZicY2PfD' 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="btn primary big-btn"
-            >
-              Join WhatsApp Community <Icons.ArrowUpRight />
-            </a>
+            <button className="btn primary big-btn"><a href='https://chat.whatsapp.com/L2e0OhSON4XGqmZicY2PfD'>Join WhatsApp Community </a><Icons.ArrowUpRight /></button>
           </div>
         </div>
       </section>
 
-      {/* SPONSORS (UPDATED WITH LOGOS) */}
+      {/* SPONSORS (UPDATED UNIFORM DESIGN) */}
       <section id="sponsors" className="section dark-section">
         <div className="container">
           <div className="section-header reveal">
             <span className="eyebrow">POWERED BY</span>
             <h2>Our Sponsors</h2>
           </div>
-          
-          <div className="sponsor-8-grid reveal">
+
+          <div className="sponsor-grid reveal">
             {SPONSORS.map((sp, i) => (
-              <div key={i} className="sp-glass-tile">
-                <div className="sp-content">
-                  {/* Changed from text to img */}
-                  <img src={sp.logo} alt={sp.name} className="sp-logo-img" />
-                  <span className="sp-full-name">{sp.name}</span>
-                </div>
+              <div key={i} className={`sp-card ${sp.invert ? 'invert' : ''}`}>
                 <div className="sp-shine"></div>
+                {/* Image has object-fit to ensure nothing is cropped */}
+                <img src={sp.logo} alt={sp.name} className="sp-logo-img" />
               </div>
             ))}
           </div>
 
-          <div className="center-btn reveal" style={{marginTop: '60px'}}>
+          <div className="center-btn reveal" style={{ marginTop: '60px' }}>
             <button className="btn outline">Become a Sponsor</button>
           </div>
         </div>
@@ -383,9 +371,9 @@ function App() {
         <div className="container">
           <div className="footer-content">
             <div className="footer-brand-header">
-               <h1 className="footer-giant-text">
-                 CODE ON <span className="highlight-orange">JVM</span>
-               </h1>
+              <h1 className="footer-giant-text">
+                CODE ON <span className="highlight-orange">JVM</span>
+              </h1>
             </div>
 
             <div className="f-grid">
@@ -417,12 +405,12 @@ function App() {
           </div>
           <div className="footer-divider"></div>
           <div className="footer-bottom-bar">
-             <div className="fb-left">
-                &copy; 2026 CODE ON JVM. CHENNAI.
-             </div>
-             <button className="back-top-btn" onClick={() => window.scrollTo(0,0)}>
-               Back to Top <span className="icon-up"><Icons.ArrowUp /></span>
-             </button>
+            <div className="fb-left">
+              &copy; 2026 CODE ON JVM. CHENNAI.
+            </div>
+            <button className="back-top-btn" onClick={() => window.scrollTo(0, 0)}>
+              Back to Top <span className="icon-up"><Icons.ArrowUp /></span>
+            </button>
           </div>
         </div>
       </footer>
