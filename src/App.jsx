@@ -19,9 +19,6 @@ const Icons = {
 /* --- DATA --- */
 const LOGO_URL = "/Assets/cropped_circle_image.png";
 
-/* NOTE: Ensure you have images named 'event-1.jpg', 'event-2.jpg' etc. 
-  inside your 'public/Assets/' folder. 
-*/
 const PAST_EVENTS = [
   { id: 1, title: "December Meetup", date: "Dec 2024", img: "/Assets/event-1.jpg" },
   { id: 2, title: "Hackerz Thiruvizha", date: "Feb, 2025", img: "/Assets/event-2.jpg" },
@@ -33,26 +30,28 @@ const PAST_EVENTS = [
   { id: 8, title: "January Meetup", date: "Jan, 2025", img: "/Assets/event-8.jpg" },
 ];
 
+/* UPDATED: Points to local images in /Assets/ folder */
 const TEAM = [
-  { name: "Arjun R.", role: "Founder", img: "https://ui-avatars.com/api/?name=Arjun+R&background=111&color=f89820&bold=true" },
-  { name: "Divya K.", role: "Tech Lead", img: "https://ui-avatars.com/api/?name=Divya+K&background=111&color=f89820&bold=true" },
-  { name: "Sanjay M.", role: "Organizer", img: "https://ui-avatars.com/api/?name=Sanjay+M&background=111&color=f89820&bold=true" },
-  { name: "Priya S.", role: "Evangelist", img: "https://ui-avatars.com/api/?name=Priya+S&background=111&color=f89820&bold=true" },
-  { name: "Karthik B.", role: "Core Team", img: "https://ui-avatars.com/api/?name=Karthik+B&background=111&color=f89820&bold=true" },
-  { name: "Meera J.", role: "Core Team", img: "https://ui-avatars.com/api/?name=Meera+J&background=111&color=f89820&bold=true" },
-  { name: "Rahul V.", role: "Volunteer", img: "https://ui-avatars.com/api/?name=Rahul+V&background=111&color=f89820&bold=true" },
-  { name: "Ankit P.", role: "Volunteer", img: "https://ui-avatars.com/api/?name=Ankit+P&background=111&color=f89820&bold=true" },
+  { name: "Paarthan", role: "Founder", img: "/Assets/paarthan.jpg" },
+  { name: "Madesh", role: "Core Team", img: "/Assets/madesh.jpeg" },
+  { name: "Pranav", role: "Core Team", img: "/Assets/pranav.jpg" },
+  { name: "Swetha", role: "Core Team", img: "/Assets/swetha.jpg" },
+  { name: "Hari", role: "Volunteer", img: "/Assets/hari.jpg" },
+  { name: "Devadarshini", role: "Volunteer", img: "/Assets/devadarshini.jpeg" },
+  { name: "Mahaveer", role: "Volunteer", img: "/Assets/mahaveer.webp" },
+  { name: "Mithil", role: "Volunteer", img: "/Assets/mithil.jpeg" },
 ];
 
+/* UPDATED: Points to local images in /Assets/ folder */
 const SPONSORS = [
-  { name: "JetBrains", logo: "JB" },
-  { name: "Oracle", logo: "ORCL" },
-  { name: "RedHat", logo: "RH" },
-  { name: "VMware", logo: "VMW" },
-  { name: "Spring", logo: "SPR" },
-  { name: "DataDog", logo: "DD" },
-  { name: "Okta", logo: "OKTA" },
-  { name: "Redis", logo: "RED" },
+  { name: "St. Joseph's College of Engineering", logo: "/Assets/st-josephs.png" },
+  { name: "CONTENTSTACK", logo: "/Assets/contentstack.png" },
+  { name: "rezoomex", logo: "/Assets/rezoomex.png" },
+  { name: "Yuniq", logo: "/Assets/yuniq.png" },
+  { name: "M2P", logo: "/Assets/m2p.png" },
+  { name: "Payilagam", logo: "/Assets/payilagam.png" },
+  { name: "Entrans Tech", logo: "/Assets/entrans.png" },
+  { name: "Emma", logo: "/Assets/emma.png" },
 ];
 
 // --- HOOKS ---
@@ -241,7 +240,7 @@ function App() {
         </div>
       </section>
 
-      {/* EVENTS (Updated with local images and no tags) */}
+      {/* EVENTS */}
       <section id="events" className="section dark-section">
         <div className="container">
           <div className="section-header reveal">
@@ -253,13 +252,13 @@ function App() {
             <div className="fe-bg"></div>
             <div className="fe-content">
               <span className="fe-badge">UPCOMING</span>
-              <h3>JVM Concurrency Deep Dive</h3>
+              <h3>Code On JVM goes to Madurai</h3>
               <div className="fe-meta">
-                <span><Icons.Calendar /> Oct 24, 2026</span>
-                <span><Icons.MapPin /> IIT Madras Research Park</span>
+                <span><Icons.Calendar /> 21st February 2026</span>
+                <span><Icons.MapPin /> Dot Com Infoway, Madurai</span>
               </div>
-              <p>Project Loom, Virtual Threads, and the future of Java.</p>
-              <button className="btn primary">Register Now</button>
+              <p>Expect insightful tech sessions, JVM-focused discussions, and meaningful networking</p>
+              <button className="btn primary"><a href='https://luma.com/w5pirooi'>Register Now</a></button>
             </div>
           </div>
 
@@ -268,9 +267,7 @@ function App() {
             {PAST_EVENTS.map(ev => (
               <div key={ev.id} className="event-card reveal">
                 <div className="ec-image">
-                  {/* Updated to use local images, tag removed */}
                   <img src={ev.img} alt={ev.title} />
-                  {/* Overlay removed as tag is requested to be removed */}
                 </div>
                 <div className="ec-details">
                   <span className="ec-date">{ev.date}</span>
@@ -289,12 +286,20 @@ function App() {
           <h2 className="join-heading">JOIN THE <span className="outline-text">ELITE</span></h2>
           <p className="join-sub">Access our private network, job referrals, and architecture debates.</p>
           <div className="join-btns">
-           <button className="btn primary big-btn"><a href='https://chat.whatsapp.com/L2e0OhSON4XGqmZicY2PfD'>Join WhatsApp Community </a><Icons.ArrowUpRight /></button>
+            {/* CLEAN BUTTON FIX: Used 'a' tag directly for better accessibility */}
+            <a 
+              href='https://chat.whatsapp.com/L2e0OhSON4XGqmZicY2PfD' 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn primary big-btn"
+            >
+              Join WhatsApp Community <Icons.ArrowUpRight />
+            </a>
           </div>
         </div>
       </section>
 
-      {/* SPONSORS */}
+      {/* SPONSORS (UPDATED WITH LOGOS) */}
       <section id="sponsors" className="section dark-section">
         <div className="container">
           <div className="section-header reveal">
@@ -306,7 +311,8 @@ function App() {
             {SPONSORS.map((sp, i) => (
               <div key={i} className="sp-glass-tile">
                 <div className="sp-content">
-                  <span className="sp-logo-text">{sp.logo}</span>
+                  {/* Changed from text to img */}
+                  <img src={sp.logo} alt={sp.name} className="sp-logo-img" />
                   <span className="sp-full-name">{sp.name}</span>
                 </div>
                 <div className="sp-shine"></div>
