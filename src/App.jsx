@@ -13,7 +13,10 @@ const Icons = {
   Terminal: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>,
   Cpu: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><path d="M9 9h6v6H9z"></path><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path></svg>,
   Zap: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
-  Globe: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+  Globe: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>,
+  // NEW ICONS
+  CheckCircle: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>,
+  AlertTriangle: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
 };
 
 /* --- DATA --- */
@@ -41,9 +44,8 @@ const TEAM = [
   { name: "Mithil", role: "Volunteer", img: "/Assets/mithil.jpeg" },
 ];
 
-/* UPDATED SPONSORS DATA: 'invert: true' added to white logos */
 const SPONSORS = [
-  { name: "St. Joseph's College of Engineering", logo: "/Assets/sjosephs.png" },
+  { name: "St. Joseph's College of Engineering", logo: "/Assets/st-josephs.png" },
   { name: "CONTENTSTACK", logo: "/Assets/contentstack.png" },
   { name: "rezoomex", logo: "/Assets/rezoomex.png" },
   { name: "M2P", logo: "/Assets/m2p.png" },
@@ -58,6 +60,7 @@ const useCountUp = (end, duration = 2000) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -94,6 +97,16 @@ function App() {
   const [sessions, refSess] = useCountUp(20);
   const [community, refComm] = useCountUp(100);
 
+  const [contactData, setContactData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const [sending, setSending] = useState(false);
+  const [contactStatus, setContactStatus] = useState(""); // "" | "error"
+  const [isSuccess, setIsSuccess] = useState(false); // New state to toggle view
+
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -116,6 +129,43 @@ function App() {
   const scrollTo = (id) => {
     setMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleContactChange = (e) => {
+    setContactData({
+      ...contactData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    setContactStatus("");
+
+    try {
+      const res = await fetch("https://formspree.io/f/xqedkjqo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contactData)
+      });
+
+      if (res.ok) {
+        setIsSuccess(true); // Toggle the success view
+        setContactData({ name: "", email: "", message: "" });
+      } else {
+        setContactStatus("error");
+      }
+    } catch (err) {
+      setContactStatus("error");
+    }
+
+    setSending(false);
+  };
+
+  const resetForm = () => {
+    setIsSuccess(false);
+    setContactStatus("");
   };
 
   return (
@@ -290,7 +340,7 @@ function App() {
         </div>
       </section>
 
-      {/* SPONSORS (UPDATED UNIFORM DESIGN) */}
+      {/* SPONSORS */}
       <section id="sponsors" className="section dark-section">
         <div className="container">
           <div className="section-header reveal">
@@ -302,7 +352,6 @@ function App() {
             {SPONSORS.map((sp, i) => (
               <div key={i} className={`sp-card ${sp.invert ? 'invert' : ''}`}>
                 <div className="sp-shine"></div>
-                {/* Image has object-fit to ensure nothing is cropped */}
                 <img src={sp.logo} alt={sp.name} className="sp-logo-img" />
               </div>
             ))}
@@ -338,10 +387,10 @@ function App() {
         </div>
       </section>
 
-      {/* CONTACT */}
+      {/* CONTACT (REIMAGINED) */}
       <section id="contact" className="section contact-section">
         <div className="container">
-          <div className="contact-wrapper reveal">
+          <div className="contact-wrapper">
             <div className="contact-text">
               <h2>Let's Talk Code.</h2>
               <p>Speaking, sponsoring, or just saying hello.</p>
@@ -350,18 +399,74 @@ function App() {
                 <div className="cd-item"><label>Location</label>Chennai, India</div>
               </div>
             </div>
-            <form className="contact-form glass" onSubmit={e => e.preventDefault()}>
-              <div className="form-group">
-                <input type="text" placeholder="Name" required />
-              </div>
-              <div className="form-group">
-                <input type="email" placeholder="Email" required />
-              </div>
-              <div className="form-group">
-                <textarea placeholder="Message" rows="4" required></textarea>
-              </div>
-              <button type="submit" className="btn primary full">Send Message</button>
-            </form>
+
+            <div className="glass">
+              {isSuccess ? (
+                // SUCCESS STATE VIEW
+                <div className="success-view">
+                  <div className="success-icon">
+                    <Icons.CheckCircle />
+                  </div>
+                  <h3>Message Received</h3>
+                  <p>We'll be in touch shortly.</p>
+                  <button className="btn outline" onClick={resetForm}>
+                    Send Another
+                  </button>
+                </div>
+              ) : (
+                // FORM STATE VIEW
+                <form className="contact-form" onSubmit={handleContactSubmit}>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      value={contactData.name}
+                      onChange={handleContactChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={contactData.email}
+                      onChange={handleContactChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <textarea
+                      name="message"
+                      placeholder="Message"
+                      rows="4"
+                      value={contactData.message}
+                      onChange={handleContactChange}
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn primary full"
+                    disabled={sending}
+                  >
+                    {sending ? "Sending..." : "Send Message"}
+                  </button>
+
+                  {/* Sleek Error Banner (if needed) */}
+                  {contactStatus === "error" && (
+                    <div className="error-banner">
+                      <Icons.AlertTriangle />
+                      <span>Something went wrong. Please try again.</span>
+                    </div>
+                  )}
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
