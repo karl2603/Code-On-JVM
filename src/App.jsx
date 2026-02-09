@@ -11,6 +11,8 @@ import Team from './components/Team';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
+/* Prototype */
+
 function App() {
   const [active, setActive] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
