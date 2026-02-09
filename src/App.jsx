@@ -14,7 +14,6 @@ const Icons = {
   Cpu: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><path d="M9 9h6v6H9z"></path><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path></svg>,
   Zap: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
   Globe: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>,
-  // NEW ICONS
   CheckCircle: () => <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>,
   AlertTriangle: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
 };
@@ -61,7 +60,6 @@ const useCountUp = (end, duration = 2000) => {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
   
-
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) setInView(true);
@@ -104,8 +102,8 @@ function App() {
   });
 
   const [sending, setSending] = useState(false);
-  const [contactStatus, setContactStatus] = useState(""); // "" | "error"
-  const [isSuccess, setIsSuccess] = useState(false); // New state to toggle view
+  const [contactStatus, setContactStatus] = useState(""); 
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -151,7 +149,7 @@ function App() {
       });
 
       if (res.ok) {
-        setIsSuccess(true); // Toggle the success view
+        setIsSuccess(true);
         setContactData({ name: "", email: "", message: "" });
       } else {
         setContactStatus("error");
@@ -387,7 +385,7 @@ function App() {
         </div>
       </section>
 
-      {/* CONTACT (REIMAGINED) */}
+      {/* CONTACT (RESPONSIVE) */}
       <section id="contact" className="section contact-section">
         <div className="container">
           <div className="contact-wrapper">
@@ -457,7 +455,7 @@ function App() {
                     {sending ? "Sending..." : "Send Message"}
                   </button>
 
-                  {/* Sleek Error Banner (if needed) */}
+                  {/* Error Banner */}
                   {contactStatus === "error" && (
                     <div className="error-banner">
                       <Icons.AlertTriangle />
