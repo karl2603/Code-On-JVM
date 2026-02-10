@@ -7,7 +7,7 @@ const Navbar = ({ scrolled, menuOpen, setMenuOpen, active, scrollTo }) => (
     <div className="nav-inner">
       <div className="logo-container" onClick={() => scrollTo('home')}>
         <img src={LOGO_URL} alt="Code On JVM" className="nav-logo-img" />
-        <div className="logo-text">CODEON<span className="highlight-orange">JVM</span></div>
+        {/* TEXT REMOVED as requested */}
       </div>
       <div className={`nav-menu ${menuOpen ? 'open' : ''}`}>
         {['Home', 'About', 'Work', 'Events', 'Join', 'Sponsors', 'Team', 'Contact'].map(item => (
