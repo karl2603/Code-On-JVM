@@ -1,4 +1,4 @@
-export const LOGO_URL = "/Assets/cropped_circle_image.png";
+export const LOGO_URL = "/Assets/Logo_1_Black.jpg.jpeg";
 
 export const PAST_EVENTS = [
   { id: 1, title: "December Meetup", date: "Dec 2024", img: "/Assets/event-1.jpg" },

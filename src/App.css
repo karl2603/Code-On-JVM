@@ -195,105 +195,148 @@ button {
   justify-content: center;
 }
 
-/* Navbar */
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: 0.4s;
-  height: 80px;
-  border-bottom: 1px solid transparent;
+/* --- NAVBAR --- */
+.navbar { 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  z-index: 1000; 
+  transition: 0.4s; 
+  height: 100px; /* Increased from 80px to accommodate the massive logo */
+  border-bottom: 1px solid transparent; 
 }
 
-.navbar.scrolled {
-  background: rgba(3, 3, 3, 0.85);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+.navbar.scrolled { 
+  background: rgba(3, 3, 3, 0.85); 
+  backdrop-filter: blur(16px); 
+  border-bottom: 1px solid var(--border); 
+  height: 80px; /* Slims down slightly when scrolling */
 }
 
-.nav-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
+.nav-inner { 
+  max-width: 1400px; 
+  margin: 0 auto; 
+  height: 100%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 0 40px; 
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 1002;
+.logo-container { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  cursor: pointer; 
+  transition: 0.3s; 
 }
 
-.logo-container:hover {
-  opacity: 0.8;
+.logo-container:hover { 
+  opacity: 0.8; 
 }
 
-.nav-logo-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--border);
+.logo-container:hover .nav-logo-img {
+  transform: scale(1.05);
 }
 
-.logo-text {
-  font-family: var(--font-code);
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: -1px;
+/* --- MASSIVE LOGO SIZING --- */
+.nav-logo-img { 
+  height: 85px; /* Pushed up to 85px, which drastically increases width automatically */
+  width: auto; 
+  object-fit: contain; 
+  mix-blend-mode: screen; /* Keeps the black background invisible */
+  transition: transform 0.3s ease;
 }
 
-.nav-menu {
-  display: flex;
-  gap: 32px;
+.logo-text { 
+  font-family: var(--font-code); 
+  font-weight: 700; 
+  font-size: 1.25rem; 
+  letter-spacing: -1px; 
 }
 
-.nav-link {
-  background: none;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  font-weight: 500;
-  position: relative;
-  padding: 4px 0;
+.nav-menu { 
+  display: flex; 
+  gap: 32px; 
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--orange);
-  transition: 0.3s var(--ease-out);
+.nav-link { 
+  background: none; 
+  color: var(--text-muted); 
+  font-size: 0.9rem; 
+  font-weight: 500; 
+  position: relative; 
+  padding: 4px 0; 
+}
+
+.nav-link::after { 
+  content: ''; 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  width: 0; 
+  height: 1px; 
+  background: var(--orange); 
+  transition: 0.3s var(--ease-out); 
   box-shadow: 0 0 10px var(--orange);
 }
 
-.nav-link:hover {
-  color: #fff;
+.nav-link:hover { 
+  color: #fff; 
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
+.nav-link:hover::after, .nav-link.active::after { 
+  width: 100%; 
 }
 
-.nav-link.active {
-  color: #fff;
+.nav-link.active { 
+  color: #fff; 
 }
 
-.menu-btn {
-  display: none;
-  background: none;
-  color: #fff;
-  z-index: 1002;
+.menu-btn { 
+  display: none; 
+  background: none; 
+  color: #fff; 
+}
+
+/* --- NAVBAR MOBILE RESPONSIVENESS --- */
+@media (max-width: 900px) {
+  .nav-logo-img { 
+    height: 55px; /* Keeps it reasonably large on phones without breaking the menu */
+  }
+  
+  .nav-menu { 
+    position: fixed; 
+    top: 80px; 
+    left: 0; 
+    width: 100%; 
+    background: rgba(0,0,0,0.95); 
+    backdrop-filter: blur(10px); 
+    flex-direction: column; 
+    padding: 20px; 
+    gap: 0; 
+    border-bottom: 1px solid var(--border); 
+    height: 0; 
+    overflow: hidden; 
+    transition: 0.4s var(--ease-out); 
+  }
+  
+  .nav-menu.open { 
+    height: auto; 
+    padding: 20px 20px 40px; 
+  }
+  
+  .nav-link { 
+    padding: 16px; 
+    width: 100%; 
+    text-align: left; 
+    border-bottom: 1px solid #222; 
+    font-size: 1.1rem; 
+  }
+  
+  .menu-btn { 
+    display: block; 
+  }
 }
 
 /* Hero */
